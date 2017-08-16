@@ -26,11 +26,11 @@ $ curl -X POST http://kong:8001/apis/{api}/plugins \
 
 `api`: The `id` or `name` of the API that this plugin configuration will target
 
-You can also apply it for every API using the `http://kong:8001/plugins/` endpoint. Read the [Plugin Reference](/docs/latest/admin-api/#add-plugin) for more information.
+You can also apply it for every API using the `http://kong:8001/plugins/` endpoint. Read the [Plugin Reference](https://getkong.org/docs/latest/admin-api/#add-plugin) for more information.
 
 Once applied, any user with a valid credential can access the service/API.
 To restrict usage to only some of the authenticated users, also add the
-[ACL](/plugins/acl/) plugin (not covered here) and create whitelist or
+[ACL](https://getkong.org/plugins/acl/) plugin (not covered here) and create whitelist or
 blacklist groups of users.
 
 form parameter                   | default | description
@@ -72,7 +72,7 @@ parameter                      | default | description
 
 A [Consumer][consumer-object] can have many credentials.
 
-If you are also using the [ACL](/plugins/acl/) plugin and whitelists with this
+If you are also using the [ACL](https://getkong.org/plugins/acl/) plugin and whitelists with this
 service, you must add the new consumer to a whitelisted group. See
 [ACL: Associating Consumers][acl-associating] for details.
 
