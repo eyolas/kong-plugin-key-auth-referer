@@ -133,8 +133,8 @@ When a client has been authenticated, the plugin will append some headers to the
 
 You can use this information on your side to implement additional logic. You can use the `X-Consumer-ID` value to query the Kong Admin API and retrieve more information about the Consumer.
 
-[api-object]: /docs/latest/admin-api/#api-object
-[configuration]: /docs/latest/configuration
-[consumer-object]: /docs/latest/admin-api/#consumer-object
-[acl-associating]: /plugins/acl/#associating-consumers
-[faq-authentication]: /about/faq/#how-can-i-add-an-authentication-layer-on-a-microservice/api?
+[api-object]: https://getkong.org/docs/latest/admin-api/#api-object
+[configuration]: https://getkong.org/docs/latest/configuration
+[consumer-object]: https://getkong.org/docs/latest/admin-api/#consumer-object
+[acl-associating]: https://getkong.org/plugins/acl/#associating-consumers
+[faq-authentication]: https://getkong.org/about/faq/#how-can-i-add-authentication-to-a-microservice-api
