@@ -1,10 +1,9 @@
-local cache = require "kong.tools.database_cache"
-local auth_cache = require "kong.plugins.key-auth-referer.cache"
 local responses = require "kong.tools.responses"
 local constants = require "kong.constants"
 local singletons = require "kong.singletons"
 local public_tools = require "kong.tools.public"
 local BasePlugin = require "kong.plugins.base_plugin"
+
 
 local ngx_set_header = ngx.req.set_header
 local ngx_get_headers = ngx.req.get_headers
@@ -21,6 +20,7 @@ local _realm = 'Key realm="'.._KONG._NAME..'"'
 local KeyAuthHandlerReferer = BasePlugin:extend()
 
 KeyAuthHandlerReferer.PRIORITY = 1000
+KeyAuthHandlerReferer.VERSION = "1.1.0"
 
 function KeyAuthHandlerReferer:new()
   KeyAuthHandlerReferer.super.new(self, "key-auth-referer")
@@ -162,8 +162,13 @@ local function do_authentication(conf)
   end
 
   -- retrieve our consumer linked to this API key
-  local credential, err = cache.get_or_set(auth_cache.keyauth_referer_credential_key(key),
-                                      nil, load_credential, key)
+
+  local cache = singletons.cache
+  local dao = singletons.dao
+
+  local credential_cache_key = dao.keyauth_credentials:cache_key(key)
+  local credential, err = cache:get(credential_cache_key, nil, load_credential, key)
+
   if err then
     return responses.send_HTTP_INTERNAL_SERVER_ERROR(err)
   end
@@ -184,8 +189,10 @@ local function do_authentication(conf)
   -----------------------------------------
 
   -- retrieve the consumer linked to this API key, to set appropriate headers
-  local consumer, err = cache.get_or_set(cache.consumer_key(credential.consumer_id),
-                                    nil, load_consumer, credential.consumer_id)
+
+  local consumer_cache_key = dao.consumers:cache_key(credential.consumer_id)
+  local consumer, err = cache:get(consumer_cache_key, nil, load_consumer, credential.consumer_id)
+
   if err then
     return responses.send_HTTP_INTERNAL_SERVER_ERROR(err)
   end

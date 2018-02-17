@@ -4,6 +4,30 @@ Add Key Authentication (also referred to as an API key) and referer validation t
 
 ----
 
+## Installation (for >= v2.x)
+
+Install the rock when building your Kong image/instance:
+```
+luarocks install kong-plugin-key-auth-referer
+```
+
+Add the plugin to your `custom_plugins` section in `kong.conf`, the `KONG_CUSTOM_PLUGINS` is also available.
+
+```
+custom_plugins = key-auth-referer
+```
+
+----
+
+## Compatibility
+
+| Plugin  | Kong version |
+|--|--|
+| v1.0 | 0.10.x |
+| v2.0 | 0.12.x |
+
+----
+
 ## Terminology
 
 - `api`: your upstream service placed behind Kong, for which Kong proxies requests to.
@@ -100,7 +124,7 @@ HTTP/1.1 201 Created
 form parameter      | default | description
 ---                 | ---     | ---
 `key`<br>*optional* |         | You can optionally set your own unique `key` to authenticate the client. If missing, the plugin will generate one.
-`authorized_referer` |         | List of authorized referer (see [test-referer.lua](/test-referer.lua))
+`authorized_referer` |         | List of authorized referer (see [test-referer.lua](/kong/plugins/key-auth-referer/test-referer.lua))
 
 <div class="alert alert-warning">
   <strong>Note:</strong> It is recommended to let Kong auto-generate the key. Only specify it yourself if you are migrating an existing system to Kong. You must re-use your keys to make the migration to Kong transparent to your Consumers.
